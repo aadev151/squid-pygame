@@ -4,6 +4,8 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
+import rlgl_rules
+
 
 def main():
     pygame.init()
@@ -49,6 +51,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
             if event.type == pygame.MOUSEMOTION:
                 mouse_position = pygame.mouse.get_pos()
 
@@ -69,6 +72,12 @@ def main():
                                                 pygame.Rect(150, 310, width - 300, 60), 0, 25)
                 screen.blit(rules_label, (150 + (rules_button.width - rules_label.get_width()) // 2,
                                           310 + (60 - rules_label.get_height()) // 2))
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                mouse_position = pygame.mouse.get_pos()
+                if start_button.collidepoint(mouse_position):
+                    pygame.quit()
+                    rlgl_rules.main()
 
         clock.tick(fps)
         pygame.display.flip()
