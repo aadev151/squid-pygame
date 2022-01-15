@@ -2,12 +2,15 @@ import pygame
 
 from setup import width, height
 from setup import button_color, button_hover_color
+from setup import load_image
 
 import rlgl
 
 
 def main():
     pygame.init()
+
+    pygame.display.set_icon(load_image('icon.png'))
 
     pygame.mixer.music.load('data/rules.mp3')
     pygame.mixer.music.play(-1)
@@ -18,7 +21,7 @@ def main():
     screen.fill(pygame.Color('black'))
 
     font = pygame.font.Font(None, 70)
-    name = font.render("Red Light Green Light", True, (237, 27, 118))
+    name = font.render("Red Light, Green Light", True, (237, 27, 118))
     screen.blit(name, ((width - name.get_width()) // 2, 40))
 
     font = pygame.font.Font(None, 30)
@@ -68,6 +71,7 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
+                    rlgl.is_red = False
                     rlgl.main()
 
         clock.tick(fps)

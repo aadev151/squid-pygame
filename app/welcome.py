@@ -9,6 +9,9 @@ import rlgl_rules
 
 def main():
     pygame.init()
+
+    pygame.display.set_icon(load_image('icon.png'))
+
     pygame.display.set_caption('Squid Pygame')
     screen = pygame.display.set_mode((width, height))
 

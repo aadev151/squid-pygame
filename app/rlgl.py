@@ -8,6 +8,7 @@ from random import choice, randint
 from time import time
 
 import rlgl_death
+import rlgl_pass
 
 
 is_red = False
@@ -15,6 +16,9 @@ is_red = False
 
 def main():
     pygame.init()
+
+    pygame.display.set_icon(load_image('icon.png'))
+    pygame.display.set_caption('Red Light, Green Light')
 
     bg = pygame.transform.scale(load_image('rlgl_bg.png'), (width, height))
     green = pygame.mixer.Sound('data/green_light.mp3')
@@ -47,6 +51,7 @@ def main():
             super().__init__(player_group, all_sprites)
             self.image = load_image('player.png')
             self.x = x
+            self.mask = pygame.mask.from_surface(self.image)
             self.rect = self.image.get_rect().move(x, 300)
 
         def update(self, x):
@@ -57,12 +62,12 @@ def main():
         def __init__(self):
             super().__init__(finish_group, all_sprites)
             self.image = load_image('finish_line.png')
+            self.mask = pygame.mask.from_surface(self.image)
             self.rect = self.image.get_rect().move(width - 150, 380)
 
     player = Player(20)
     finish = FinishLine()
 
-    pygame.display.set_caption('Red Light Green Light')
     screen = pygame.display.set_mode((width, height))
 
     screen.blit(bg, (0, 0))
@@ -149,6 +154,10 @@ def main():
         elif time_playing >= 2 and not has_2:
             red_light()
             has_2 = True
+
+        if pygame.sprite.collide_mask(player, finish):
+            pygame.quit()
+            rlgl_pass.main()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
