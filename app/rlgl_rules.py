@@ -2,7 +2,8 @@ import pygame
 
 from setup import width, height
 from setup import button_color, button_hover_color
-from setup import load_image
+
+import rlgl
 
 
 def main():
@@ -28,17 +29,20 @@ def main():
                          True, pygame.Color('white'))
     label4 = font.render('When you cross the line, the game will be over.',
                          True, pygame.Color('white'))
+    label5 = font.render('You will have 1 minute to play the game.',
+                         True, pygame.Color('white'))
     screen.blit(label1, (65, 130))
     screen.blit(label2, (65, 160))
     screen.blit(label3, (65, 190))
     screen.blit(label4, (65, 220))
+    screen.blit(label5, (65, 250))
 
     start_button_color = button_color
     start_button = pygame.draw.rect(screen, start_button_color,
-                                    pygame.Rect(300, 280, width - 600, 60), 0, 25)
+                                    pygame.Rect(300, 310, width - 600, 60), 0, 25)
     start_label = font.render("Start", True, pygame.Color('white'))
     screen.blit(start_label, (300 + (start_button.width - start_label.get_width()) // 2,
-                              280 + (60 - start_label.get_height()) // 2))
+                              310 + (60 - start_label.get_height()) // 2))
 
     fps = 10
     clock = pygame.time.Clock()
@@ -56,9 +60,15 @@ def main():
                 else:
                     start_button_color = button_color
                 start_button = pygame.draw.rect(screen, start_button_color,
-                                                pygame.Rect(300, 280, width - 600, 60), 0, 25)
+                                                pygame.Rect(300, 310, width - 600, 60), 0, 25)
                 screen.blit(start_label, (300 + (start_button.width - start_label.get_width()) // 2,
-                                          280 + (60 - start_label.get_height()) // 2))
+                                          310 + (60 - start_label.get_height()) // 2))
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                mouse_position = pygame.mouse.get_pos()
+                if start_button.collidepoint(mouse_position):
+                    pygame.quit()
+                    rlgl.main()
 
         clock.tick(fps)
         pygame.display.flip()

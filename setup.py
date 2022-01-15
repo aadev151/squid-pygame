@@ -13,4 +13,4 @@ def load_image(name):
 
 size = width, height = 800, 600
 button_color = (48, 141, 70)
-button_hover_color = (255, 141, 70)
+button_hover_color = (244, 71, 134)
