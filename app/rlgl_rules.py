@@ -23,7 +23,7 @@ def main():
 
     font = pygame.font.Font(None, 30)
     label1 = font.render('You will be playing Red Light, Green Light.', True, pygame.Color('white'))
-    label2 = font.render('You should move using up-error while the doll is not looking at you.',
+    label2 = font.render('You should move using up-arrow while the doll is not looking at you.',
                          True, pygame.Color('white'))
     label3 = font.render('As soon as the doll turns, you should stop.',
                          True, pygame.Color('white'))
