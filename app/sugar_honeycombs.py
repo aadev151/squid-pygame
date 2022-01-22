@@ -6,6 +6,7 @@ from time import time
 import s_h_death, s_h_pass
 
 k = 0
+count = 1
 COOKIES = ['cookie_circle1.png', 'cookie_star1.png']
 
 COOKIES_CIRCLE = ['cookie_circle1.png', 'cookie_circle2.png',
@@ -43,8 +44,8 @@ def new_letter(screen):
     return key, place, text
 
 
-def new_cookie(screen, count, type):
-    global k
+def new_cookie(screen, type):
+    global k, count
     if count == 1:
         if type == 0:
             next_cookie = pygame.transform.scale(
@@ -91,7 +92,6 @@ def main():
     fps = 50
     clock = pygame.time.Clock()
 
-    count = 1
     key, place, text = new_letter(screen)
 
     clock = pygame.time.Clock()
@@ -120,8 +120,7 @@ def main():
                     break
 
                 if event.key == key:
-                    key, place, text, next_cookie = new_cookie(screen,
-                                                               count, type)
+                    key, place, text, next_cookie = new_cookie(screen, type)
                 else:
                     running = False
                     pygame.quit()
@@ -137,8 +136,7 @@ def main():
 
                 mouse_position = pygame.mouse.get_pos()
                 if place.collidepoint(mouse_position):
-                    key, place, text, next_cookie = new_cookie(screen,
-                                                               count, type)
+                    key, place, text, next_cookie = new_cookie(screen, type)
                 else:
                     running = False
                     pygame.quit()
