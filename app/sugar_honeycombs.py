@@ -1,12 +1,12 @@
 import pygame
 from setup import width, height
-from setup import button_color, button_hover_color
 from setup import load_image
-from random import choice, randint
+from random import randint
 from time import time
-import s_h_death
+import s_h_death, s_h_pass
 
-COOKIES = ['cookie_circle1.png', 'cookie_star1.png', 'cookie_triange1.png']
+k = 0
+COOKIES = ['cookie_circle1.png', 'cookie_star1.png']
 
 COOKIES_CIRCLE = ['cookie_circle1.png', 'cookie_circle2.png',
                   'cookie_circle3.png',
@@ -37,7 +37,39 @@ def new_letter(screen):
     place = text.get_rect(
         center=(x, y))
     screen.blit(text, place)
-    return key
+    return key, place
+
+
+def new_cookie(screen, bg, count, type):
+    global k
+    if count == 1:
+        if type == 0:
+            next_cookie = pygame.transform.scale(
+                load_image(COOKIES_CIRCLE[k]),
+                (200, 200))
+        elif type == 1:
+            next_cookie = pygame.transform.scale(
+                load_image(COOKIES_STAR[k]),
+                (200, 200))
+        k += 1
+        screen.blit(bg, (0, 0))
+        screen.blit(next_cookie, (300, 200))
+        key, place = new_letter(screen)
+        count = 0
+    else:
+        if type == 0:
+            next_cookie = pygame.transform.scale(
+                load_image(COOKIES_CIRCLE[k]),
+                (200, 200))
+        elif type == 1:
+            next_cookie = pygame.transform.scale(
+                load_image(COOKIES_STAR[k]),
+                (200, 200))
+        screen.blit(bg, (0, 0))
+        screen.blit(next_cookie, (300, 200))
+        key, place = new_letter(screen)
+        count += 1
+    return key, place
 
 
 def main():
@@ -54,16 +86,15 @@ def main():
 
     cookie = pygame.transform.scale(load_image(COOKIES[type]),
                                     (200, 200))
-    k = 0
     screen.blit(cookie, (300, 200))
     running = True
 
     fps = 50
     clock = pygame.time.Clock()
-    count = 1
-    key = new_letter(screen)
 
-    all_sprites = pygame.sprite.Group()
+    count = 1
+    key, place = new_letter(screen)
+
     clock = pygame.time.Clock()
 
     while running:
@@ -72,43 +103,27 @@ def main():
                 running = False
 
             if event.type == pygame.KEYDOWN:
-                if event.key == key:
-                    if count == 1:
-                        if type == 0:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_CIRCLE[k]),
-                                (200, 200))
-                        elif type == 1:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_STAR[k]),
-                                (200, 200))
-                        elif type == 2:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_STAR[k]),
-                                (200, 200))
-                        k += 1
-                        screen.blit(bg, (0, 0))
-                        screen.blit(next_cookie, (300, 200))
-                        key = new_letter(screen)
-                        count = 0
-                    else:
-                        if type == 0:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_CIRCLE[k]),
-                                (200, 200))
-                        elif type == 1:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_STAR[k]),
-                                (200, 200))
-                        elif type == 2:
-                            next_cookie = pygame.transform.scale(
-                                load_image(COOKIES_STAR[k]),
-                                (200, 200))
-                        screen.blit(bg, (0, 0))
-                        screen.blit(next_cookie, (300, 200))
-                        key = new_letter(screen)
-                        count += 1
 
+                if k == 10 and type == 0 or k == 11 and type == 1:
+                    pygame.quit()
+                    s_h_pass.main()
+                    break
+
+                if event.key == key:
+                    key, place = new_cookie(screen, bg, count, type)
+                else:
+                    pygame.quit()
+                    s_h_death.main()
+            if event.type == pygame.MOUSEBUTTONUP:
+
+                if k == 10 and type == 0 or k == 11 and type == 1:
+                    pygame.quit()
+                    s_h_pass.main()
+                    break
+
+                mouse_position = pygame.mouse.get_pos()
+                if place.collidepoint(mouse_position):
+                    key, place = new_cookie(screen, bg, count, type)
                 else:
                     pygame.quit()
                     s_h_death.main()
@@ -117,6 +132,4 @@ def main():
 
         pygame.display.flip()
 
-
-if __name__ == "__main__":
-    main()
+main()

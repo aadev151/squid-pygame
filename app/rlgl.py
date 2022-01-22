@@ -10,7 +10,6 @@ from time import time
 import rlgl_death
 import rlgl_pass
 
-
 is_red = False
 
 
@@ -23,7 +22,8 @@ def main():
     bg = pygame.transform.scale(load_image('rlgl_bg.png'), (width, height))
     green = pygame.mixer.Sound('data/green_light.mp3')
     red = pygame.mixer.Sound('data/red_light.mp3')
-    doll_front = pygame.transform.scale(load_image('doll_front.png'), (130, 293))
+    doll_front = pygame.transform.scale(load_image('doll_front.png'),
+                                        (130, 293))
     doll_back = pygame.transform.scale(load_image('doll_back.png'), (130, 293))
 
     all_sprites = pygame.sprite.Group()
@@ -81,7 +81,8 @@ def main():
 
     start_time = time()
     has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
-        has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (False,) * 16
+    has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (
+                                                                        False,) * 16
 
     while running:
         time_playing = time() - start_time
@@ -181,10 +182,11 @@ def main():
         screen.blit(finish.image, finish.rect)
 
         font = pygame.font.Font(None, 50)
-        time_label = font.render(str(time_remaining), True, pygame.Color('black'))
+        time_label = font.render(str(time_remaining), True,
+                                 pygame.Color('black'))
         screen.blit(time_label, (40, 40))
 
         clock.tick(fps)
         pygame.display.flip()
 
-    pygame.quit()        
+    pygame.quit()
