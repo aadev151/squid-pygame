@@ -90,8 +90,6 @@ def main():
     running = True
 
     fps = 50
-    clock = pygame.time.Clock()
-
     key, place, text = new_letter(screen)
 
     clock = pygame.time.Clock()
@@ -99,7 +97,7 @@ def main():
 
     while running:
         time_playing = time() - start_time
-        time_remaining = int(20 - time_playing)
+        time_remaining = int(30 - time_playing)
 
         if time_remaining == 0:
             running = False
@@ -156,6 +154,5 @@ def main():
             pygame.display.flip()
         except pygame.error:
             running = False
-
 
 main()
