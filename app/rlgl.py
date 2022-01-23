@@ -77,18 +77,26 @@ def main():
     running = True
 
     start_time = time()
-    has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
-        has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (False,) * 16
+    has_36, has_33, has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
+        has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (False,) * 18
 
     while running:
         time_playing = time() - start_time
-        time_remaining = int(31 - time_playing)
+        time_remaining = int(41 - time_playing)
 
         if time_remaining == 0:
             pygame.quit()
             rlgl_death.main()
 
-        if time_playing >= 29 and not has_29:
+        if time_playing >= 36 and not has_36:
+            green_light()
+            has_36 = True
+
+        elif time_playing >= 33 and not has_33:
+            red_light()
+            has_33 = True
+
+        elif time_playing >= 29 and not has_29:
             green_light()
             has_29 = True
 
@@ -164,9 +172,9 @@ def main():
                 if event.key == pygame.K_RIGHT:
                     player.update(player.x + 10)
 
-            if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red:
+            '''if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red:
                 pygame.quit()
-                rlgl_death.main()
+                rlgl_death.main()'''
 
         screen.blit(bg, (0, 0))
         if is_red:

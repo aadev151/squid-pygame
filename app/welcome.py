@@ -38,7 +38,7 @@ def main():
                               310 + (60 - rules_label.get_height()) // 2))
 
     font = pygame.font.Font(None, 20)
-    version_label = font.render("Version 0.0.1", True, pygame.Color('white'))
+    version_label = font.render("Version 0.1.1", True, pygame.Color('white'))
     screen.blit(version_label, (width - version_label.get_width() - 10,
                                 height - version_label.get_height() - 10))
 

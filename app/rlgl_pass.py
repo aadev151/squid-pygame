@@ -4,7 +4,7 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
-import welcome
+import s_h_rules
 
 
 def main():
@@ -54,7 +54,7 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    welcome.main()
+                    s_h_rules.main()
 
         clock.tick(fps)
         pygame.display.flip()

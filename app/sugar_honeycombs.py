@@ -1,9 +1,57 @@
 import pygame
 from setup import width, height
 from setup import load_image
-from random import randint
+from random import randint, choice
 from time import time
-import s_h_death, s_h_pass
+
+import s_h_death
+import s_h_pass
+
+
+screen_rect = (0, 0, width, height)
+all_sprites = pygame.sprite.Group()
+GRAVITY = 5
+
+
+class Particle(pygame.sprite.Sprite):
+    # сгенерируем частицы разного размера
+    fire = [load_image("star.png")]
+    for scale in (25, 35, 50):
+        fire.append(pygame.transform.scale(fire[0], (scale, scale)))
+
+    def __init__(self, pos, dx, dy):
+        super().__init__(all_sprites)
+        self.image = choice(self.fire)
+        self.rect = self.image.get_rect()
+
+        # у каждой частицы своя скорость — это вектор
+        self.velocity = [dx, dy]
+        # и свои координаты
+        self.rect.x, self.rect.y = pos
+
+        # гравитация будет одинаковой (значение константы)
+        self.gravity = GRAVITY
+
+    def update(self):
+        # применяем гравитационный эффект:
+        # движение с ускорением под действием гравитации
+        self.velocity[1] += self.gravity
+        # перемещаем частицу
+        self.rect.x += self.velocity[0]
+        self.rect.y += self.velocity[1]
+        # убиваем, если частица ушла за экран
+        if not self.rect.colliderect(screen_rect):
+            self.kill()
+
+
+def create_particles(position):
+    # количество создаваемых частиц
+    particle_count = 20
+    # возможные скорости
+    numbers = range(-10, 16)
+    for _ in range(particle_count):
+        Particle(position, choice(numbers), choice(numbers))
+
 
 k = 0
 count = 1
@@ -76,7 +124,7 @@ def main():
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
-    pygame.display.set_caption('Sugar honeycombs')
+    pygame.display.set_caption('Sugar Honeycombs')
 
     screen = pygame.display.set_mode((width, height))
 
@@ -97,13 +145,15 @@ def main():
 
     while running:
         time_playing = time() - start_time
-        time_remaining = int(30 - time_playing)
+        time_remaining = int(21 - time_playing)
 
         if time_remaining == 0:
             running = False
             pygame.quit()
-            s_h_death.main()
+            s_h_death.main(message='Time left')
             break
+
+        correct_tap = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -119,6 +169,7 @@ def main():
 
                 if event.key == key:
                     key, place, text, next_cookie = new_cookie(screen, type)
+                    correct_tap = True
                 else:
                     running = False
                     pygame.quit()
@@ -135,11 +186,16 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if place.collidepoint(mouse_position):
                     key, place, text, next_cookie = new_cookie(screen, type)
+                    correct_tap = True
                 else:
                     running = False
                     pygame.quit()
                     s_h_death.main()
                     break
+
+            if correct_tap:
+                create_particles(place.center)
+
         try:
             screen.blit(bg, (0, 0))
             screen.blit(next_cookie, (300, 200))
@@ -149,10 +205,11 @@ def main():
                                      pygame.Color('green'))
             screen.blit(time_label, (400, 30))
 
+            all_sprites.update()
+            all_sprites.draw(screen)
+
             clock.tick(fps)
 
             pygame.display.flip()
         except pygame.error:
             running = False
-
-main()

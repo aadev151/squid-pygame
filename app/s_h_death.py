@@ -7,20 +7,20 @@ from setup import load_image
 import welcome
 
 
-def main():
+def main(message='You broke the cookie:('):
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
+    pygame.mixer.Sound('data/eliminated.mp3').play()
 
-    pygame.display.set_caption("You broke the cookie:(")
+    pygame.display.set_caption(message)
     screen = pygame.display.set_mode((width, height))
-
 
     bg = pygame.transform.scale(load_image('s_h_death.png'), (width, height))
     screen.blit(bg, (0, 0))
 
     font = pygame.font.Font(None, 70)
-    name = font.render("You broke the cookie:(", True, (237, 27, 118))
+    name = font.render(message, True, (237, 27, 118))
     screen.blit(name, ((width - name.get_width()) // 2, 40))
 
     font = pygame.font.Font(None, 40)
