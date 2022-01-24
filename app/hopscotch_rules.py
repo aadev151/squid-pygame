@@ -15,22 +15,21 @@ def main():
     pygame.mixer.music.load('data/rules.mp3')
     pygame.mixer.music.play(-1)
 
-    pygame.display.set_caption('Squid Pygame - Game #2')
+    pygame.display.set_caption('Squid Pygame - Game #3')
     screen = pygame.display.set_mode((width, height))
 
     screen.fill(pygame.Color('black'))
 
     font = pygame.font.Font(None, 70)
-    name = font.render("Sugar Honeycombs", True, (237, 27, 118))
+    name = font.render("Hopscotch", True, (237, 27, 118))
     screen.blit(name, ((width - name.get_width()) // 2, 40))
 
     font = pygame.font.Font(None, 30)
-    label1 = font.render('You will be playing Sugar Honeycombs.', True, pygame.Color('white'))
-    label2 = font.render('You should break a cookie by clicking on appearing letters or',
+    label1 = font.render('You will be playing Hopscotch.', True, pygame.Color('white'))
+    label2 = font.render('You will see two sheets of glass.', True, pygame.Color('white'))
+    label3 = font.render('One of them is click-proof, and the other one is fake.',
                          True, pygame.Color('white'))
-    label3 = font.render(' by tapping corresponding letters on your keyboard.',
-                         True, pygame.Color('white'))
-    label4 = font.render('If you mistap or misclick, you will be elimimnated.',
+    label4 = font.render('You will have to click on the correct sheet of glass.',
                          True, pygame.Color('white'))
     label5 = font.render('You will have 20 seconds to play the game.',
                          True, pygame.Color('white'))

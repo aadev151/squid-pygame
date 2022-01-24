@@ -8,6 +8,9 @@ import s_h_rules
 
 
 def main():
+    with open('data/db/last.txt', 'w') as last_file:
+        last_file.write('2')
+
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))

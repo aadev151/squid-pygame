@@ -4,10 +4,13 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
-import welcome
+import hopscotch_rules
 
 
 def main():
+    with open('data/db/last.txt', 'w') as last_file:
+        last_file.write('3')
+
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
@@ -54,7 +57,7 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    welcome.main()
+                    hopscotch_rules.main()
 
         clock.tick(fps)
         pygame.display.flip()

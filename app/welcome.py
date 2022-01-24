@@ -5,6 +5,9 @@ from setup import button_color, button_hover_color
 from setup import load_image
 
 import rlgl_rules
+import s_h_rules
+import hopscotch_rules
+
 
 
 def main():
@@ -80,7 +83,14 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    rlgl_rules.main()
+                    levels = {
+                        '': rlgl_rules,
+                        '1': rlgl_rules,
+                        '2': s_h_rules,
+                        '3': hopscotch_rules
+                    }
+                    with open('data/db/last.txt') as last_file:
+                        levels[last_file.read()].main()
 
         clock.tick(fps)
         pygame.display.flip()

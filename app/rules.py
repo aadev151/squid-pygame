@@ -4,48 +4,56 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
-import sugar_honeycombs
-
+import rlgl_rules
 
 def main():
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
 
-    pygame.mixer.music.load('data/rules.mp3')
-    pygame.mixer.music.play(-1)
-
-    pygame.display.set_caption('Squid Pygame - Game #2')
+    pygame.display.set_caption('Rules')
     screen = pygame.display.set_mode((width, height))
 
-    screen.fill(pygame.Color('black'))
+    bg = pygame.transform.scale(load_image('card.jpeg'), (width, height))
+    screen.blit(bg, (0, 0))
 
     font = pygame.font.Font(None, 70)
-    name = font.render("Sugar Honeycombs", True, (237, 27, 118))
+    name = font.render("Rules", True, (237, 27, 118))
     screen.blit(name, ((width - name.get_width()) // 2, 40))
 
+
+    "So you're in huge debt" \
+    "You have received the card which has \n a phone number on its back" \
+    "You have called the number&"
+
     font = pygame.font.Font(None, 30)
-    label1 = font.render('You will be playing Sugar Honeycombs.', True, pygame.Color('white'))
-    label2 = font.render('You should break a cookie by clicking on appearing letters or',
+    label1 = font.render('So you\'re in huge debt.', True, pygame.Color('white'))
+    label2 = font.render('You have received the card which has a phone number on its back.',
                          True, pygame.Color('white'))
-    label3 = font.render(' by tapping corresponding letters on your keyboard.',
+    label3 = font.render('You have called the number, and the voice offered you to play a game.',
                          True, pygame.Color('white'))
-    label4 = font.render('If you mistap or misclick, you will be elimimnated.',
+    label4 = font.render('If you win, you\'ll have a prize of 45.6 billion won ($38m).',
                          True, pygame.Color('white'))
-    label5 = font.render('You will have 20 seconds to play the game.',
+    label5 = font.render('So you immediately agree, and now have to play three games.',
                          True, pygame.Color('white'))
-    screen.blit(label1, (65, 130))
-    screen.blit(label2, (65, 160))
-    screen.blit(label3, (65, 190))
-    screen.blit(label4, (65, 220))
-    screen.blit(label5, (65, 250))
+    label6 = font.render('If you fail at any of them, you\'ll be eliminated, meaning you\'ll have no',
+                         True, pygame.Color('white'))
+    label7 = font.render('chance of getting the prize.',
+                         True, pygame.Color('white'))
+    screen.blit(label1, (35, 130))
+    screen.blit(label2, (35, 160))
+    screen.blit(label3, (35, 190))
+    screen.blit(label4, (35, 220))
+    screen.blit(label5, (35, 250))
+    screen.blit(label6, (35, 280))
+    screen.blit(label7, (35, 310))
 
     start_button_color = button_color
     start_button = pygame.draw.rect(screen, start_button_color,
-                                    pygame.Rect(300, 310, width - 600, 60), 0, 25)
+                                    pygame.Rect(300, 350, width - 600, 60), 0, 25)
     start_label = font.render("Start", True, pygame.Color('white'))
     screen.blit(start_label, (300 + (start_button.width - start_label.get_width()) // 2,
-                              310 + (60 - start_label.get_height()) // 2))
+                              350 + (60 - start_label.get_height()) // 2))
 
     fps = 10
     clock = pygame.time.Clock()
@@ -63,17 +71,16 @@ def main():
                 else:
                     start_button_color = button_color
                 start_button = pygame.draw.rect(screen, start_button_color,
-                                                pygame.Rect(300, 310, width - 600, 60), 0, 25)
+                                                pygame.Rect(300, 350, width - 600, 60), 0, 25)
                 screen.blit(start_label, (300 + (start_button.width - start_label.get_width()) // 2,
-                                          310 + (60 - start_label.get_height()) // 2))
+                                          350 + (60 - start_label.get_height()) // 2))
 
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    sugar_honeycombs.k = 0
-                    sugar_honeycombs.count = 1
-                    sugar_honeycombs.main()
+                    rlgl_rules.is_red = False
+                    rlgl_rules.main()
 
         clock.tick(fps)
         pygame.display.flip()

@@ -8,6 +8,9 @@ import welcome
 
 
 def main(message='You broke the cookie:('):
+    with open('data/db/last.txt', 'w') as last_file:
+        last_file.write('1')
+
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
