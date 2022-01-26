@@ -4,7 +4,7 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
-import sugar_honeycombs
+import hopscotch
 
 
 def main():
@@ -70,9 +70,7 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    sugar_honeycombs.k = 0
-                    sugar_honeycombs.count = 1
-                    sugar_honeycombs.main()
+                    hopscotch.main()
 
         clock.tick(fps)
         pygame.display.flip()

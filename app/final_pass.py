@@ -73,7 +73,7 @@ def export():
             results.append(res[0])
         writer.writerow(results)
 
-    easygui.msgbox("This is a message!", title="simple gui")
+    easygui.msgbox("The results are saved onto your desktop", title="Saved")
 
 
 def main():

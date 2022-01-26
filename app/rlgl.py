@@ -176,9 +176,9 @@ def main():
                 if event.key == pygame.K_RIGHT:
                     player.update(player.x + 10)
 
-            if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red:
+            '''if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red:
                 pygame.quit()
-                rlgl_death.main()
+                rlgl_death.main()'''
 
         screen.blit(bg, (0, 0))
         if is_red:
