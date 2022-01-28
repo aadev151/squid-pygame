@@ -30,6 +30,8 @@ def main():
     k = 8
     sleep_count = 0
 
+    god_mode = False
+
     fps = 50
     clock = pygame.time.Clock()
     running = True
@@ -40,6 +42,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.mod == pygame.KMOD_CAPS:
+                    god_mode = True
 
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_position = pygame.mouse.get_pos()
@@ -62,7 +68,8 @@ def main():
                         pygame.quit()
                         hopscotch_pass.main()
 
-                elif glasses[int(not current_glass)].collidepoint(mouse_position):
+                elif glasses[int(not current_glass)].collidepoint(mouse_position) and \
+                        not god_mode:
                     pygame.quit()
                     hopscotch_death.main()
 

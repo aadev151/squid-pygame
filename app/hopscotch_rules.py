@@ -31,7 +31,7 @@ def main():
                          True, pygame.Color('white'))
     label4 = font.render('You will have to click on the correct sheet of glass.',
                          True, pygame.Color('white'))
-    label5 = font.render('You will have 20 seconds to play the game.',
+    label5 = font.render('You will have 30 seconds to play the game.',
                          True, pygame.Color('white'))
     screen.blit(label1, (65, 130))
     screen.blit(label2, (65, 160))

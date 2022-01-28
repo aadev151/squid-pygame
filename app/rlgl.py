@@ -72,6 +72,8 @@ def main():
     screen.blit(doll_back, (width - 150, 100))
     green.play()
 
+    god_mode = False
+
     fps = 50
     clock = pygame.time.Clock()
     running = True
@@ -175,8 +177,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     player.update(player.x + 10)
+                if event.mod == pygame.KMOD_CAPS:
+                    god_mode = True
 
-            if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red:
+            if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red and \
+                    not god_mode:
                 pygame.quit()
                 rlgl_death.main()
 
