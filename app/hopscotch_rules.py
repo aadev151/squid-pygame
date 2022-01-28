@@ -4,7 +4,7 @@ from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
 
-import hopscotch
+import hopscotch2
 
 
 def main():
@@ -70,7 +70,7 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    hopscotch.main()
+                    hopscotch2.main()
 
         clock.tick(fps)
         pygame.display.flip()
