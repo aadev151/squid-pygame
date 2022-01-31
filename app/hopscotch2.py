@@ -21,8 +21,14 @@ def main():
     bg = pygame.transform.scale(load_image('g_b_bg.png'), (width, height))
     screen.blit(bg, (0, 0))
 
-    glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 100, 120))
-    glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 100, 120))
+    glass1 = pygame.transform.scale(
+        load_image('glass2.png'),
+        (200, 200))
+
+    glass2 = pygame.transform.scale(
+        load_image('glass2.png'),
+        (500, 200))
+
     glasses = [glass1, glass2]
     current_glass = randint(0, 1)
 
@@ -74,8 +80,13 @@ def main():
                     hopscotch_death.main()
 
         screen.blit(bg, (0, 0))
-        glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 100, 120))
-        glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 100, 120))
+        glass1 = pygame.transform.scale(
+            load_image('glass2.png'),
+            (200, 200))
+
+        glass2 = pygame.transform.scale(
+            load_image('glass2.png'),
+            (500, 200))
         glasses = [glass1, glass2]
 
         font = pygame.font.Font(None, 50)
@@ -88,3 +99,5 @@ def main():
         pygame.display.flip()
 
     pygame.quit()
+
+main()
