@@ -20,9 +20,11 @@ def main():
 
     bg = pygame.transform.scale(load_image('g_b_bg.png'), (width, height))
     screen.blit(bg, (0, 0))
+    death_lst = [(270, 250), (430, 250)]
 
-    glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 100, 120))
-    glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 100, 120))
+    glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 120, 140))
+    glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 120, 140))
+
     glasses = [glass1, glass2]
     current_glass = randint(0, 1)
 
@@ -72,24 +74,28 @@ def main():
                         not god_mode:
                     death = pygame.transform.scale(
                         load_image('glass.png'),
-                        (200, 200))
-                    screen.blit(death, (300, 200))
+                        (120, 140))
+                    screen.blit(death, death_lst[not current_glass])
+                    sleep(2)
                     pygame.quit()
                     hopscotch_death.main()
 
-        screen.blit(bg, (0, 0))
-        glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 100, 120))
-        glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 100, 120))
-        glasses = [glass1, glass2]
+        try:
+            screen.blit(bg, (0, 0))
+            glass1 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 120, 140))
+            glass2 = pygame.draw.rect(screen, pygame.Color(50, 239, 255), (430, 250, 120, 140))
+            glasses = [glass1, glass2]
 
-        font = pygame.font.Font(None, 50)
-        time_label = font.render(str(time_remaining), True, pygame.Color('white'))
-        screen.blit(time_label, (40, 40))
-        glasses_label = font.render(f'{k} glass(es) left.', True, pygame.Color('white'))
-        screen.blit(glasses_label, (40, 80))
+            font = pygame.font.Font(None, 50)
+            time_label = font.render(str(time_remaining), True, pygame.Color('white'))
+            screen.blit(time_label, (40, 40))
+            glasses_label = font.render(f'{k} glass(es) left.', True, pygame.Color('white'))
+            screen.blit(glasses_label, (40, 80))
 
-        clock.tick(fps)
-        pygame.display.flip()
+            clock.tick(fps)
+            pygame.display.flip()
+        except pygame.error:
+            pass
 
     pygame.quit()
 
