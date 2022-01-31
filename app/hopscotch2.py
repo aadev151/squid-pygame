@@ -76,7 +76,7 @@ def main():
                         load_image('glass.png'),
                         (120, 140))
                     screen.blit(death, death_lst[not current_glass])
-                    sleep(2)
+                    pygame.display.flip()
                     pygame.quit()
                     hopscotch_death.main()
 

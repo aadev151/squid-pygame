@@ -3,7 +3,6 @@ import pygame
 from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
-import welcome
 
 
 def main():
@@ -17,7 +16,6 @@ def main():
     pygame.display.set_caption("You're dead")
     screen = pygame.display.set_mode((width, height))
 
-    pygame.mixer.Sound('data/eliminated.mp3').play()
 
     bg = pygame.transform.scale(load_image('g_b_death.png'), (width, height))
     screen.blit(bg, (0, 0))
@@ -58,7 +56,6 @@ def main():
                 mouse_position = pygame.mouse.get_pos()
                 if start_button.collidepoint(mouse_position):
                     pygame.quit()
-                    welcome.main()
 
         clock.tick(fps)
         pygame.display.flip()

@@ -19,8 +19,14 @@ def main():
     bg = pygame.transform.scale(load_image('g_b_bg.png'), (width, height))
     screen.blit(bg, (0, 0))
 
-    pygame.draw.rect(screen, pygame.Color(50, 239, 255), (270, 250, 100, 120))
-    pygame.draw.rect(screen, pygame.Color(0, 239, 255), (430, 250, 100, 120))
+    next = pygame.transform.scale(
+        load_image('glass2.png'),
+        (200, 200))
+
+    next = pygame.transform.scale(
+        load_image('glass2.png'),
+        (500, 200))
+
 
     count = 9
 
@@ -57,10 +63,13 @@ def main():
                     count -= 1
                     screen.blit(bg, (0, 0))
 
-                    pygame.draw.rect(screen, pygame.Color(50, 239, 255),
-                                     (270, 250, 100, 120))
-                    pygame.draw.rect(screen, pygame.Color(50, 239, 255),
-                                     (430, 250, 100, 120))
+                    next = pygame.transform.scale(
+                        load_image('glass2.png'),
+                        (200, 200))
+                    next = pygame.transform.scale(
+                        load_image('glass2.png'),
+                        (500, 200))
+
 
                     rand1 = randint(0, 1)
                     if rand1 == 0:
@@ -80,10 +89,13 @@ def main():
                     count -= 1
                     screen.blit(bg, (0, 0))
 
-                    pygame.draw.rect(screen, pygame.Color(50, 239, 255),
-                                     (270, 250, 100, 120))
-                    pygame.draw.rect(screen, pygame.Color(50, 239, 255),
-                                     (430, 250, 100, 120))
+                    next = pygame.transform.scale(
+                        load_image('glass2.png'),
+                        (200, 200))
+
+                    next = pygame.transform.scale(
+                        load_image('glass2.png'),
+                        (500, 200))
 
                     rand1 = randint(0, 1)
                     if rand1 == 0:
