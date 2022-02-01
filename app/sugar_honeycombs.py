@@ -177,7 +177,7 @@ def main():
                 if k == 10 and type == 0 or k == 11 and type == 1:
                     running = False
                     connection = sqlite3.connect('data/db/time.db')
-                    connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 1', (int(time_playing),))
+                    connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 2', (int(time_playing),))
                     connection.commit()
                     connection.close()
                     pygame.quit()

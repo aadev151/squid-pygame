@@ -1,5 +1,5 @@
 import pygame
-from time import time
+from time import time, sleep
 import sqlite3
 
 from setup import width, height
@@ -82,6 +82,10 @@ def main():
     has_36, has_33, has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
         has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (False,) * 18
 
+    pygame.key.set_repeat(10, 10)
+
+    red_time = None
+
     while running:
         time_playing = time() - start_time
         time_remaining = int(41 - time_playing)
@@ -96,6 +100,7 @@ def main():
 
         elif time_playing >= 33 and not has_33:
             red_light()
+            red_time = time()
             has_33 = True
 
         elif time_playing >= 29 and not has_29:
@@ -104,6 +109,7 @@ def main():
 
         elif time_playing >= 27 and not has_27:
             red_light()
+            red_time = time()
             has_27 = True
 
         elif time_playing >= 25 and not has_25:
@@ -112,6 +118,7 @@ def main():
 
         elif time_playing >= 23 and not has_23:
             red_light()
+            red_time = time()
             has_23 = True
 
         elif time_playing >= 22 and not has_22:
@@ -120,6 +127,7 @@ def main():
 
         elif time_playing >= 21 and not has_21:
             red_light()
+            red_time = time()
             has_21 = True
 
         elif time_playing >= 19 and not has_19:
@@ -128,6 +136,7 @@ def main():
 
         elif time_playing >= 17 and not has_17:
             red_light()
+            red_time = time()
             has_17 = True
 
         elif time_playing >= 15 and not has_15:
@@ -136,6 +145,7 @@ def main():
 
         elif time_playing >= 11 and not has_11:
             red_light()
+            red_time = time()
             has_11 = True
 
         elif time_playing >= 10 and not has_10:
@@ -144,6 +154,7 @@ def main():
 
         elif time_playing >= 9 and not has_9:
             red_light()
+            red_time = time()
             has_9 = True
 
         elif time_playing >= 7 and not has_7:
@@ -152,6 +163,7 @@ def main():
 
         elif time_playing >= 5 and not has_5:
             red_light()
+            red_time = time()
             has_5 = True
 
         elif time_playing >= 4 and not has_4:
@@ -160,6 +172,7 @@ def main():
 
         elif time_playing >= 2 and not has_2:
             red_light()
+            red_time = time()
             has_2 = True
 
         if pygame.sprite.collide_mask(player, finish):
@@ -176,17 +189,17 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    player.update(player.x + 10)
+                    player.update(player.x + 0.5)
                 if event.mod == pygame.KMOD_CAPS:
                     god_mode = True
 
-            if event.type == pygame.KEYUP and event.key == pygame.K_RIGHT and is_red and \
-                    not god_mode:
-                pygame.quit()
-                rlgl_death.main()
+                if event.key == pygame.K_RIGHT and is_red and time() - red_time >= 0.5 and \
+                        not god_mode:
+                    pygame.quit()
+                    rlgl_death.main()
 
         screen.blit(bg, (0, 0))
-        if is_red:
+        if is_red and time() - red_time >= 0.5:
             screen.blit(doll_front, (width - 150, 100))
         else:
             screen.blit(doll_back, (width - 150, 100))
