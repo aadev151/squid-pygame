@@ -2,7 +2,7 @@ import pygame
 from time import time, sleep
 import sqlite3
 
-from setup import width, height
+from setup import size, width, height
 from setup import load_image
 
 import rlgl_death
@@ -72,11 +72,16 @@ def main():
     screen.blit(doll_back, (width - 150, 100))
     green.play()
 
+    transp_rect = pygame.Surface(size)
+    transp_rect.set_alpha(0)
+    transp_rect.fill((0, 0, 0))
+    screen.blit(transp_rect, (0, 0))
+
     god_mode = False
 
     fps = 50
     clock = pygame.time.Clock()
-    running = True
+    running = playing = True
 
     start_time = time()
     has_36, has_33, has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
@@ -84,132 +89,145 @@ def main():
 
     pygame.key.set_repeat(10, 10)
 
-    red_time = None
+    red_time = death_time = None
+    leave_the_game = False
 
     while running:
         time_playing = time() - start_time
         time_remaining = int(41 - time_playing)
 
-        if time_remaining == 0:
+        if leave_the_game and transp_rect.get_alpha() >= 190:
+            print(True)
             pygame.quit()
             rlgl_death.main()
 
-        if time_playing >= 36 and not has_36:
-            green_light()
-            has_36 = True
+        elif playing:
+            if time_remaining == 0:
+                death_time = time()
+                leave_the_game = True
+                playing = False
 
-        elif time_playing >= 33 and not has_33:
-            red_light()
-            red_time = time()
-            has_33 = True
+            if time_playing >= 36 and not has_36:
+                green_light()
+                has_36 = True
 
-        elif time_playing >= 29 and not has_29:
-            green_light()
-            has_29 = True
+            elif time_playing >= 33 and not has_33:
+                red_light()
+                red_time = time()
+                has_33 = True
 
-        elif time_playing >= 27 and not has_27:
-            red_light()
-            red_time = time()
-            has_27 = True
+            elif time_playing >= 29 and not has_29:
+                green_light()
+                has_29 = True
 
-        elif time_playing >= 25 and not has_25:
-            green_light()
-            has_25 = True
+            elif time_playing >= 27 and not has_27:
+                red_light()
+                red_time = time()
+                has_27 = True
 
-        elif time_playing >= 23 and not has_23:
-            red_light()
-            red_time = time()
-            has_23 = True
+            elif time_playing >= 25 and not has_25:
+                green_light()
+                has_25 = True
 
-        elif time_playing >= 22 and not has_22:
-            green_light()
-            has_22 = True
+            elif time_playing >= 23 and not has_23:
+                red_light()
+                red_time = time()
+                has_23 = True
 
-        elif time_playing >= 21 and not has_21:
-            red_light()
-            red_time = time()
-            has_21 = True
+            elif time_playing >= 22 and not has_22:
+                green_light()
+                has_22 = True
 
-        elif time_playing >= 19 and not has_19:
-            green_light()
-            has_19 = True
+            elif time_playing >= 21 and not has_21:
+                red_light()
+                red_time = time()
+                has_21 = True
 
-        elif time_playing >= 17 and not has_17:
-            red_light()
-            red_time = time()
-            has_17 = True
+            elif time_playing >= 19 and not has_19:
+                green_light()
+                has_19 = True
 
-        elif time_playing >= 15 and not has_15:
-            green_light()
-            has_15 = True
+            elif time_playing >= 17 and not has_17:
+                red_light()
+                red_time = time()
+                has_17 = True
 
-        elif time_playing >= 11 and not has_11:
-            red_light()
-            red_time = time()
-            has_11 = True
+            elif time_playing >= 15 and not has_15:
+                green_light()
+                has_15 = True
 
-        elif time_playing >= 10 and not has_10:
-            green_light()
-            has_10 = True
+            elif time_playing >= 11 and not has_11:
+                red_light()
+                red_time = time()
+                has_11 = True
 
-        elif time_playing >= 9 and not has_9:
-            red_light()
-            red_time = time()
-            has_9 = True
+            elif time_playing >= 10 and not has_10:
+                green_light()
+                has_10 = True
 
-        elif time_playing >= 7 and not has_7:
-            green_light()
-            has_7 = True
+            elif time_playing >= 9 and not has_9:
+                red_light()
+                red_time = time()
+                has_9 = True
 
-        elif time_playing >= 5 and not has_5:
-            red_light()
-            red_time = time()
-            has_5 = True
+            elif time_playing >= 7 and not has_7:
+                green_light()
+                has_7 = True
 
-        elif time_playing >= 4 and not has_4:
-            green_light()
-            has_4 = True
+            elif time_playing >= 5 and not has_5:
+                red_light()
+                red_time = time()
+                has_5 = True
 
-        elif time_playing >= 2 and not has_2:
-            red_light()
-            red_time = time()
-            has_2 = True
+            elif time_playing >= 4 and not has_4:
+                green_light()
+                has_4 = True
 
-        if pygame.sprite.collide_mask(player, finish):
-            connection = sqlite3.connect('data/db/time.db')
-            connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 1', (int(time_playing),))
-            connection.commit()
-            connection.close()
-            pygame.quit()
-            rlgl_pass.main()
+            elif time_playing >= 2 and not has_2:
+                red_light()
+                red_time = time()
+                has_2 = True
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+            if pygame.sprite.collide_mask(player, finish):
+                connection = sqlite3.connect('data/db/time.db')
+                connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 1', (int(time_playing),))
+                connection.commit()
+                connection.close()
+                pygame.quit()
+                rlgl_pass.main()
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    player.update(player.x + 0.5)
-                if event.mod == pygame.KMOD_CAPS:
-                    god_mode = True
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-                if event.key == pygame.K_RIGHT and is_red and time() - red_time >= 0.5 and \
-                        not god_mode:
-                    pygame.quit()
-                    rlgl_death.main()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        player.update(player.x + 0.5)
+                    if event.mod == pygame.KMOD_CAPS:
+                        god_mode = True
 
-        screen.blit(bg, (0, 0))
-        if is_red and time() - red_time >= 0.5:
-            screen.blit(doll_front, (width - 150, 100))
-        else:
-            screen.blit(doll_back, (width - 150, 100))
+                    if event.key == pygame.K_RIGHT and is_red and time() - red_time >= 0.5 and \
+                            not god_mode:
+                        death_time = time()
+                        leave_the_game = True
+                        playing = False
 
-        screen.blit(player.image, player.rect)
-        screen.blit(finish.image, finish.rect)
+            screen.blit(bg, (0, 0))
+            if is_red and time() - red_time >= 0.5:
+                screen.blit(doll_front, (width - 150, 100))
+            else:
+                screen.blit(doll_back, (width - 150, 100))
 
-        font = pygame.font.Font(None, 50)
-        time_label = font.render(str(time_remaining), True, pygame.Color('black'))
-        screen.blit(time_label, (40, 40))
+            screen.blit(player.image, player.rect)
+            screen.blit(finish.image, finish.rect)
+
+            font = pygame.font.Font(None, 50)
+            time_label = font.render(str(time_remaining), True, pygame.Color('black'))
+            screen.blit(time_label, (40, 40))
+
+        if leave_the_game:
+            transp_rect.set_alpha(0 + int(40 * (time() - death_time)))
+            screen.blit(transp_rect, (0, 0))
 
         clock.tick(fps)
         pygame.display.flip()

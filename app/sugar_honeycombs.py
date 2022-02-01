@@ -1,7 +1,7 @@
 import pygame
 import sqlite3
 
-from setup import width, height
+from setup import size, width, height
 from setup import load_image
 from random import randint, choice
 from time import time
@@ -128,10 +128,19 @@ def main():
     next_cookie = pygame.transform.scale(load_image(COOKIES[type]),
                                          (200, 200))
     screen.blit(next_cookie, (300, 200))
-    running = True
+
+    transp_rect = pygame.Surface(size)
+    transp_rect.set_alpha(0)
+    transp_rect.fill((0, 0, 0))
+    screen.blit(transp_rect, (0, 0))
+
+    running = playing = True
 
     fps = 25
     key, place, text = new_letter(screen)
+
+    death_time = None
+    leave_the_game = False
 
     clock = pygame.time.Clock()
     start_time = time()
@@ -140,64 +149,68 @@ def main():
         time_playing = time() - start_time
         time_remaining = int(22 - time_playing)
 
-        if time_remaining == 0:
-            running = False
+        if leave_the_game and transp_rect.get_alpha() >= 190:
+            print(True)
             pygame.quit()
-            s_h_death.main(message='Time left')
-            break
+            s_h_death.main()
 
-        correct_tap = False
+        elif playing:
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+            if time_remaining == 0:
+                death_time = time()
+                leave_the_game = True
+                playing = False
 
-            if event.type == pygame.KEYDOWN:
+            correct_tap = False
 
-                if k == 10 and type == 0 or k == 11 and type == 1:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     running = False
-                    connection = sqlite3.connect('data/db/time.db')
-                    connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 1', (int(time_playing),))
-                    connection.commit()
-                    connection.close()
-                    pygame.quit()
-                    s_h_pass.main()
-                    break
 
-                if event.key == key:
-                    key, place, text, next_cookie = new_cookie(screen, type)
-                    correct_tap = True
-                else:
-                    running = False
-                    pygame.quit()
-                    s_h_death.main()
-                    break
-            if event.type == pygame.MOUSEBUTTONUP:
+                if event.type == pygame.KEYDOWN:
 
-                if k == 10 and type == 0 or k == 11 and type == 1:
-                    running = False
-                    connection = sqlite3.connect('data/db/time.db')
-                    connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 2', (int(time_playing),))
-                    connection.commit()
-                    connection.close()
-                    pygame.quit()
-                    s_h_pass.main()
-                    break
+                    if k == 10 and type == 0 or k == 11 and type == 1:
+                        running = False
+                        connection = sqlite3.connect('data/db/time.db')
+                        connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 1', (int(time_playing),))
+                        connection.commit()
+                        connection.close()
+                        pygame.quit()
+                        s_h_pass.main()
+                        break
 
-                mouse_position = pygame.mouse.get_pos()
-                if place.collidepoint(mouse_position):
-                    key, place, text, next_cookie = new_cookie(screen, type)
-                    correct_tap = True
-                else:
-                    running = False
-                    pygame.quit()
-                    s_h_death.main()
-                    break
+                    if event.key == key:
+                        key, place, text, next_cookie = new_cookie(screen, type)
+                        correct_tap = True
+                    else:
+                        death_time = time()
+                        leave_the_game = True
+                        playing = False
 
-            if correct_tap:
-                create_particles(place.center)
+                if event.type == pygame.MOUSEBUTTONUP:
 
-        try:
+                    if k == 10 and type == 0 or k == 11 and type == 1:
+                        running = False
+                        connection = sqlite3.connect('data/db/time.db')
+                        connection.cursor().execute('UPDATE levels SET time = ? WHERE id = 2', (int(time_playing),))
+                        connection.commit()
+                        connection.close()
+                        pygame.quit()
+                        s_h_pass.main()
+                        break
+
+                    mouse_position = pygame.mouse.get_pos()
+                    if place.collidepoint(mouse_position):
+                        key, place, text, next_cookie = new_cookie(screen, type)
+                        correct_tap = True
+                    else:
+                        death_time = time()
+                        leave_the_game = True
+                        playing = False
+
+                if correct_tap:
+                    create_particles(place.center)
+
             screen.blit(bg, (0, 0))
             screen.blit(next_cookie, (300, 200))
             screen.blit(text, place)
@@ -209,8 +222,9 @@ def main():
             all_sprites.update()
             all_sprites.draw(screen)
 
-            clock.tick(fps)
+        if leave_the_game:
+            transp_rect.set_alpha(0 + int(40 * (time() - death_time)))
+            screen.blit(transp_rect, (0, 0))
 
-            pygame.display.flip()
-        except pygame.error:
-            running = False
+        clock.tick(fps)
+        pygame.display.flip()
