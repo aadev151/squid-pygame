@@ -108,7 +108,7 @@ def main():
 
     pygame.key.set_repeat(10, 10)
 
-    red_time = blink_timee = death_time = None
+    red_time = blink_time = death_time = None
     leave_the_game = False
 
     while running:
@@ -121,9 +121,9 @@ def main():
             rlgl_death.main()
 
         elif playing:
-            if blink_timee and time() - blink_timee >= 0.3:
+            if blink_time and time() - blink_time >= 0.3:
                 player.update()
-                blink_timee = None
+                blink_time = None
 
             if time_remaining == 0:
                 death_time = time()
@@ -225,7 +225,7 @@ def main():
 
                 if event.type == blink_event:
                     player.update()
-                    blink_timee = time()
+                    blink_time = time()
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
