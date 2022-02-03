@@ -44,16 +44,32 @@ def main():
         is_red = True
 
     class Player(pygame.sprite.Sprite):
-        def __init__(self, x):
-            super().__init__(player_group, all_sprites)
-            self.image = load_image('player.png')
+        def __init__(self, sheet, columns, rows, x):
+            super().__init__(all_sprites)
+            self.frames = []
+            self.cut_sheet(sheet, columns, rows)
+            self.cur_frame = 0
+            self.image = self.frames[self.cur_frame]
             self.x = x
             self.mask = pygame.mask.from_surface(self.image)
             self.rect = self.image.get_rect().move(x, 300)
 
-        def update(self, x):
+        def cut_sheet(self, sheet, columns, rows):
+            self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+                                    sheet.get_height() // rows)
+            for j in range(rows):
+                for i in range(columns):
+                    frame_location = (self.rect.w * i, self.rect.h * j)
+                    self.frames.append(sheet.subsurface(pygame.Rect(
+                        frame_location, self.rect.size)))
+
+        def move(self, x):
             self.x = x
             self.rect = self.image.get_rect().move(x, 300)
+
+        def update(self):
+            self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+            self.image = self.frames[self.cur_frame]
 
     class FinishLine(pygame.sprite.Sprite):
         def __init__(self):
@@ -62,7 +78,7 @@ def main():
             self.mask = pygame.mask.from_surface(self.image)
             self.rect = self.image.get_rect().move(width - 150, 380)
 
-    player = Player(20)
+    player = Player(load_image('player copy.png'), 2, 1, 20)
     finish = FinishLine()
 
     screen = pygame.display.set_mode((width, height))
@@ -83,13 +99,16 @@ def main():
     clock = pygame.time.Clock()
     running = playing = True
 
+    blink_event = pygame.USEREVENT + 1
+    pygame.time.set_timer(blink_event, 2500)
+
     start_time = time()
     has_36, has_33, has_29, has_27, has_25, has_23, has_22, has_21, has_19, \
         has_17, has_15, has_11, has_10, has_9, has_7, has_5, has_4, has_2 = (False,) * 18
 
     pygame.key.set_repeat(10, 10)
 
-    red_time = death_time = None
+    red_time = blink_time = death_time = None
     leave_the_game = False
 
     while running:
@@ -102,6 +121,10 @@ def main():
             rlgl_death.main()
 
         elif playing:
+            if blink_time and time() - blink_time >= 0.3:
+                player.update()
+                blink_time = None
+
             if time_remaining == 0:
                 death_time = time()
                 leave_the_game = True
@@ -200,9 +223,13 @@ def main():
                 if event.type == pygame.QUIT:
                     running = False
 
+                if event.type == blink_event:
+                    player.update()
+                    blink_time = time()
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        player.update(player.x + 0.5)
+                        player.move(player.x + 0.5)
                     if event.mod == pygame.KMOD_CAPS:
                         god_mode = True
 
