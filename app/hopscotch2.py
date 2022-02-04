@@ -61,7 +61,7 @@ def main():
     sleep(2.5)
 
     start_time = time()
-    k = 8
+    k = 7
     sleep_count = 0
     death_lst = [(270, 250), (430, 250)]
 
@@ -102,7 +102,7 @@ def main():
                     k -= 1
                     i += 1
 
-                    if k == 1:
+                    if k == 0:
                         connection = sqlite3.connect('data/db/time.db')
                         connection.cursor().execute(
                             'UPDATE levels SET time = ? WHERE id = 3',

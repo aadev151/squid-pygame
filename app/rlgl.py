@@ -113,10 +113,9 @@ def main():
 
     while running:
         time_playing = time() - start_time
-        time_remaining = int(41 - time_playing)
+        time_remaining = int(31 - time_playing)
 
         if leave_the_game and transp_rect.get_alpha() >= 190:
-            print(True)
             pygame.quit()
             rlgl_death.main()
 
@@ -229,7 +228,7 @@ def main():
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        player.move(player.x + 0.5)
+                        player.move(player.x + 1)
                     if event.mod == pygame.KMOD_CAPS:
                         god_mode = True
 
