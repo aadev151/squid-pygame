@@ -146,5 +146,3 @@ def main():
                 pass
 
     pygame.quit()
-
-main()
