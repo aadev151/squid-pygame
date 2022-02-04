@@ -9,6 +9,7 @@ import easygui
 from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
+from setup import cover
 
 import welcome
 
@@ -93,6 +94,8 @@ def main():
     font = pygame.font.Font(None, 70)
     name = font.render("You passed", True, (237, 27, 118))
     screen.blit(name, ((width - name.get_width()) // 2, 40))
+    pygame.draw.rect(screen, (255, 255, 255), name.get_rect())
+    cover(screen, pygame.Color('white'), name.get_rect().topleft, name.get_size())
 
     font = pygame.font.Font(None, 40)
     info_label = font.render('Tap anywhere on the screen', True, pygame.Color('white'))
@@ -157,7 +160,9 @@ def main():
                     create_particles(mouse_position)
 
         screen.blit(bg, (0, 0))
+        cover(screen, pygame.Color('white'), ((width - name.get_width()) // 2, 40), name.get_size())
         screen.blit(name, ((width - name.get_width()) // 2, 40))
+        cover(screen, (0, 0, 0), ((width - info_label.get_width()) // 2, 100), info_label.get_size())
         screen.blit(info_label, ((width - info_label.get_width()) // 2, 100))
 
         start_button = pygame.draw.rect(screen, start_button_color,

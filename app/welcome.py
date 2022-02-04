@@ -1,7 +1,7 @@
 import pygame
 
 from setup import width, height
-from setup import button_color, button_hover_color
+from setup import button_hover_color
 from setup import load_image
 
 import rules
@@ -10,8 +10,9 @@ import s_h_rules
 import hopscotch_rules
 
 
-
 def main():
+    button_color = (48, 141, 70)
+
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))

@@ -11,6 +11,13 @@ def load_image(name):
     return image
 
 
+def cover(screen, color, label_coords, label_size):
+    bg = pygame.Surface((label_size[0] + 20, label_size[1] + 20))
+    bg.set_alpha(170)
+    bg.fill(color)
+    screen.blit(bg, (label_coords[0] - 10, label_coords[1] - 10))
+
+
 size = width, height = 800, 600
-button_color = (48, 141, 70)
+button_color = (50, 116, 102)
 button_hover_color = (244, 71, 134)

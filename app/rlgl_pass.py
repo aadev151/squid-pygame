@@ -3,6 +3,7 @@ import pygame
 from setup import width, height
 from setup import button_color, button_hover_color
 from setup import load_image
+from setup import cover
 
 import s_h_rules
 
@@ -23,6 +24,7 @@ def main():
 
     font = pygame.font.Font(None, 70)
     name = font.render("You passed", True, (237, 27, 118))
+    cover(screen, pygame.Color('white'), ((width - name.get_width()) // 2, 40), name.get_size())
     screen.blit(name, ((width - name.get_width()) // 2, 40))
 
     font = pygame.font.Font(None, 40)
