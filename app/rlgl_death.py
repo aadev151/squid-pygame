@@ -15,7 +15,9 @@ def main():
     pygame.display.set_caption('You were eliminated')
     screen = pygame.display.set_mode((width, height))
 
-    pygame.mixer.Sound('data/eliminated.mp3').play()
+    eliminated_sound = pygame.mixer.Sound('data/eliminated.mp3')
+    eliminated_sound.set_volume(.1)
+    eliminated_sound.play()
 
     bg = pygame.transform.scale(load_image('rlgl_death.png'), (width, height))
     screen.blit(bg, (0, 0))

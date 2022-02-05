@@ -64,8 +64,6 @@ def export():
             results.append(res[0])
         writer.writerow(results)
 
-    easygui.msgbox("The results are saved onto your desktop", title="Saved")
-
 
 def main():
     with open('data/db/last.txt', 'w') as last_file:

@@ -14,7 +14,10 @@ def main(message='You broke the cookie:('):
     pygame.init()
 
     pygame.display.set_icon(load_image('icon.png'))
-    pygame.mixer.Sound('data/eliminated.mp3').play()
+
+    eliminated_sound = pygame.mixer.Sound('data/eliminated.mp3')
+    eliminated_sound.set_volume(.1)
+    eliminated_sound.play()
 
     pygame.display.set_caption(message)
     screen = pygame.display.set_mode((width, height))

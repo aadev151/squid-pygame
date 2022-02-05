@@ -32,7 +32,7 @@ def main():
                          True, pygame.Color('white'))
     label4 = font.render('When you cross the line, the game will be over.',
                          True, pygame.Color('white'))
-    label5 = font.render('You will have 40 seconds to play the game.',
+    label5 = font.render('You will have 25 seconds to play the game.',
                          True, pygame.Color('white'))
     screen.blit(label1, (65, 130))
     screen.blit(label2, (65, 160))

@@ -17,7 +17,7 @@ GRAVITY = 5
 
 class Particle(pygame.sprite.Sprite):
     fire = [load_image("star.png")]
-    for scale in (25, 35, 50):
+    for scale in (15, 25, 40):
         fire.append(pygame.transform.scale(fire[0], (scale, scale)))
 
     def __init__(self, pos, dx, dy):

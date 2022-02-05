@@ -19,7 +19,9 @@ def main():
 
     bg = pygame.transform.scale(load_image('rlgl_bg.png'), (width, height))
     green = pygame.mixer.Sound('data/green_light.mp3')
+    green.set_volume(.1)
     red = pygame.mixer.Sound('data/red_light.mp3')
+    red.set_volume(.1)
     doll_front = pygame.transform.scale(load_image('doll_front.png'), (130, 293))
     doll_back = pygame.transform.scale(load_image('doll_back.png'), (130, 293))
 
@@ -113,9 +115,10 @@ def main():
 
     while running:
         time_playing = time() - start_time
-        time_remaining = int(31 - time_playing)
+        time_remaining = int(26 - time_playing)
 
         if leave_the_game and transp_rect.get_alpha() >= 190:
+            print(True)
             pygame.quit()
             rlgl_death.main()
 
@@ -259,3 +262,8 @@ def main():
         pygame.display.flip()
 
     pygame.quit()
+
+
+if __name__ == "__main__":
+    main()
+
