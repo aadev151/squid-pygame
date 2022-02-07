@@ -18,7 +18,7 @@ def main():
 
     screen = pygame.display.set_mode((width, height))
 
-    bg = pygame.transform.scale(load_image('g_b_bg.png'), (width, height))
+    bg = pygame.transform.scale(load_image('g_b_bg2.png'), (width, height))
     screen.blit(bg, (0, 0))
 
     current_glasses = []
@@ -33,29 +33,29 @@ def main():
     for i in range(6):
         if current_glasses[i][0] == 0:
             glass1 = pygame.draw.rect(screen, pygame.Color(128, 0, 128),
-                                      (300, y, 60, 60))
+                                      (320, y, 60, 60))
             glass2 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                                      (390, y, 60, 60))
+                                      (400, y, 60, 60))
         else:
             glass1 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                                      (300, y, 60, 60))
+                                      (320, y, 60, 60))
             glass2 = pygame.draw.rect(screen, pygame.Color(128, 0, 128),
-                                      (390, y, 60, 60))
+                                      (400, y, 60, 60))
 
         glasses.append([glass1, glass2])
         y -= 80
 
     glass1 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                              (300, 25, 60, 60))
+                              (320, 25, 60, 60))
     glass2 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                              (390, 25, 60, 60))
+                              (400, 25, 60, 60))
     glasses.append([glass1, glass2])
     i = 0
 
     f1 = pygame.font.Font(None, 60)
     text1 = f1.render('?', True, pygame.Color(53, 116, 232))
-    screen.blit(text1, (317, 35))
-    screen.blit(text1, (407, 35))
+    screen.blit(text1, (335, 35))
+    screen.blit(text1, (415, 35))
     pygame.display.flip()
 
     sleep(2.5)
@@ -63,7 +63,7 @@ def main():
     start_time = time()
     k = 7
     sleep_count = 0
-    death_lst = [(270, 250), (430, 250)]
+    death_lst = [(170, 357), (453, 352)]
 
     god_mode = False
 
@@ -93,9 +93,10 @@ def main():
                     font = pygame.font.Font(None, 40)
                     pass_label = font.render('You got this one', True,
                                                 (237, 27, 118))
-                    screen.blit(pass_label,
-                                ((width - pass_label.get_width()) // 2,
-                                (height - pass_label.get_height()) // 2))
+                    if current_glasses[i].index(0) == 0:
+                        screen.blit(pass_label, (180, 400))
+                    else:
+                        screen.blit(pass_label, (470, 400))
                     pygame.display.flip()
                     sleep(2)
                     sleep_count += 1
@@ -118,7 +119,7 @@ def main():
                             not god_mode:
                     death = pygame.transform.scale(
                             load_image('glass.png'),
-                            (120, 140))
+                            (160, 140))
                     screen.blit(death, death_lst[current_glasses[i].index(1)])
                     pygame.display.flip()
                     pygame.quit()
@@ -126,10 +127,18 @@ def main():
 
             try:
                 screen.blit(bg, (0, 0))
-                glass1 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                                          (270, 250, 120, 140))
-                glass2 = pygame.draw.rect(screen, pygame.Color(20, 70, 160),
-                                          (430, 250, 120, 140))
+                glass1 = pygame.draw.polygon(screen, pygame.Color(20, 70, 160),
+                                             ((200, 357), (353, 354), (337, 494),
+                                              (110, 500)))
+                pygame.draw.aalines(screen, pygame.Color(20, 70, 160), True,
+                                    ((200, 357), (353, 354), (335, 494),
+                                     (110, 500)))
+                glass2 = pygame.draw.polygon(screen, pygame.Color(20, 70, 160),
+                                             ((447, 352), (591, 350), (693, 484),
+                                              (475, 490)))
+                pygame.draw.aalines(screen, pygame.Color(20, 70, 160), True,
+                                    ((447, 352), (591, 350), (693, 484),
+                                     (475, 490)))
                 glasses[i] = [glass1, glass2]
 
                 font = pygame.font.Font(None, 50)
@@ -146,3 +155,4 @@ def main():
                 pass
 
     pygame.quit()
+main()
