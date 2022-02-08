@@ -150,8 +150,8 @@ def main():
         screen.blit(bg, (0, 0))
         cover(screen, pygame.Color('white'), ((width - name.get_width()) // 2, 40), name.get_size())
         screen.blit(name, ((width - name.get_width()) // 2, 40))
-        cover(screen, (0, 0, 0), ((width - info_label.get_width()) // 2, 100), info_label.get_size())
-        screen.blit(info_label, ((width - info_label.get_width()) // 2, 100))
+        cover(screen, (0, 0, 0), ((width - info_label.get_width()) // 2, 120), info_label.get_size())
+        screen.blit(info_label, ((width - info_label.get_width()) // 2, 120))
 
         start_button = pygame.draw.rect(screen, start_button_color,
                                         pygame.Rect(250, 170, width - 500, 60), 0, 25)
