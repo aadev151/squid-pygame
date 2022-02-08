@@ -216,7 +216,7 @@ def main():
             screen.blit(text, place)
             font = pygame.font.Font(None, 60)
             time_label = font.render(str(time_remaining), True,
-                                     pygame.Color('green'))
+                                     pygame.Color(50, 116, 102))
             screen.blit(time_label, (400, 30))
 
             all_sprites.update()
