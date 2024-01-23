@@ -1,5 +1,7 @@
 # squid-pygame
 
+### [Archived as of 02/08/2022]
+
 One of the projects for Yandex.Lyceum
 Created by me and @ppprrroooggg
 
